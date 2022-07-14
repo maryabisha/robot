@@ -1,0 +1,78 @@
+1]differnts selenium browser and plywright browser:
+======================================================================================================================
+selenim:
+
+1]*** Settings ***
+Library    RPA.Browser.Selenium
+
+2]*** Keywords ***
+Open website
+   Open Available Browser    https://www.rpa-unlimited.com/youtube/robocorp-tutorial/index.php
+
+3] Open Available Browser    https://robotsparebinindustries.com   
+4]input text:
+Input Text   company-name  rathana
+
+5]
+  Open Available Browser    https://robotsparebinindustries.com
+    Input Text    username    maria
+    Input Password    password    thoushallnotpass
+    Submit Form
+    Input Text When Element Is Visible    firstname    First!
+6]
+
+Add product to cart
+    ${locator}=
+    ...    Set Variable
+    ...    xpath://div[@class="inventory_item" and descendant::div[contains(text(), "Sauce Labs Backpack")]]
+    ${product}=    Get WebElement    ${locator}
+    ${add_to_cart_button}=    Set Variable    ${product.find_element_by_class_name("btn_primary")}
+    Click Button    ${add_to_cart_button}
+
+Playwright:
+1]*** Settings ***
+Library    Browser
+
+2]*** Keywords ***
+Open website
+    New Page       https://www.rpa-unlimited.com/youtube/robocorp-tutorial/index.php
+
+3]Open a new browser in GUI mode
+Browser.Open Browser
+    New Page    https://robotsparebinindustries.com
+
+4]input textx
+Type Text    input#username    maria  
+
+5]
+   New Page    https://robotsparebinindustries.com
+    Type Text    input#username    maria
+    Type Secret    input#password    thoushallnotpass
+    Click    button.btn-primary
+    Type Text    input#firstname    First!
+
+
+6]
+Add product to cart
+    ${add_to_cart_button}=
+    ...    Get Element
+    ...    .inventory_item >> text="Sauce Labs Backpack" >> ../.. >> .btn_primary
+    Click    ${add_to_cart_button}   
+
+
+7]connecte js
+*** Settings ***
+Library    Browser    jsextension=${CURDIR}/module.js
+
+*** Tasks ***
+Use a JavaScript-based keyword
+    New Page
+    ${title}=    myGoToKeyword    https://playwright.dev
+    Should Be Equal    ${title}    Playwright   
+
+
+
+
+2.      
+
+
